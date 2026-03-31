@@ -10,7 +10,7 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 cur.execute("""
-CREATE TABLE students (
+CREATE TABLE IF NOT EXISTS students (
     student_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
@@ -20,7 +20,7 @@ CREATE TABLE students (
 """)
 
 cur.execute("""
-CREATE TABLE courses (
+CREATE TABLE IF NOT EXISTS courses (
     course_id SERIAL PRIMARY KEY,
     course_name VARCHAR(100),
     category VARCHAR(50)
@@ -28,7 +28,7 @@ CREATE TABLE courses (
 """)
 
 cur.execute("""
-CREATE TABLE instructors (
+CREATE TABLE IF NOT EXISTS instructors (
     instructor_id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     expertise VARCHAR(100)
@@ -36,7 +36,7 @@ CREATE TABLE instructors (
 """)
 
 cur.execute("""
-CREATE TABLE enrollments (
+CREATE TABLE IF NOT EXISTS enrollments (
     enrollment_id SERIAL PRIMARY KEY,
     student_id INT REFERENCES students(student_id),
     course_id INT REFERENCES courses(course_id),
@@ -45,7 +45,7 @@ CREATE TABLE enrollments (
 """)
 
 cur.execute("""
-CREATE TABLE course_instructors (
+CREATE TABLE IF NOT EXISTS course_instructors (
     id SERIAL PRIMARY KEY,
     course_id INT REFERENCES courses(course_id),
     instructor_id INT REFERENCES instructors(instructor_id)
@@ -57,7 +57,8 @@ INSERT INTO students (first_name, last_name, email, age) VALUES
 ('Ahmet', 'Yılmaz', 'ahmet@example.com', 21),
 ('Ayşe', 'Demir', 'ayse@example.com', 23),
 ('Mehmet', 'Kaya', 'mehmet@example.com', 22),
-('Zeynep', 'Aydın', 'zeynep@example.com', 24);
+('Zeynep', 'Aydın', 'zeynep@example.com', 24),
+('Can', 'Öztürk', 'can@example.com', 20);
 """)
 
 cur.execute("""
